@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="7" passed="7" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2023-05-06T07:59:30Z" name="Default suite" finished-at="2023-05-06T08:00:17Z" duration-ms="46808">
+    <groups>
+    </groups>
+    <test started-at="2023-05-06T07:59:30Z" name="Default test" finished-at="2023-05-06T08:00:17Z" duration-ms="46808">
+      <class name="Tester.Testing">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:Tester.Testing@4a9419d7]" started-at="2023-05-06T07:59:30Z" name="beforeClass" finished-at="2023-05-06T07:59:38Z" duration-ms="8029" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method signature="TC_01_Loginsuccess()[pri:0, instance:Tester.Testing@4a9419d7]" started-at="2023-05-06T07:59:38Z" name="TC_01_Loginsuccess" finished-at="2023-05-06T07:59:44Z" duration-ms="5621" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_01_Loginsuccess -->
+        <test-method signature="TC_02_inCorrectPassWord()[pri:0, instance:Tester.Testing@4a9419d7]" started-at="2023-05-06T07:59:44Z" name="TC_02_inCorrectPassWord" finished-at="2023-05-06T07:59:49Z" duration-ms="5479" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_02_inCorrectPassWord -->
+        <test-method signature="TC_03_inCorrectUserName()[pri:0, instance:Tester.Testing@4a9419d7]" started-at="2023-05-06T07:59:49Z" name="TC_03_inCorrectUserName" finished-at="2023-05-06T07:59:55Z" duration-ms="5459" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_03_inCorrectUserName -->
+        <test-method signature="TC_04_upperUserName()[pri:0, instance:Tester.Testing@4a9419d7]" started-at="2023-05-06T07:59:55Z" name="TC_04_upperUserName" finished-at="2023-05-06T08:00:00Z" duration-ms="5405" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_04_upperUserName -->
+        <test-method signature="TC_05_forGotPassWord()[pri:0, instance:Tester.Testing@4a9419d7]" started-at="2023-05-06T08:00:00Z" name="TC_05_forGotPassWord" finished-at="2023-05-06T08:00:06Z" duration-ms="5607" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_05_forGotPassWord -->
+        <test-method signature="TC_05_upperCaseFirstChar()[pri:0, instance:Tester.Testing@4a9419d7]" started-at="2023-05-06T08:00:06Z" name="TC_05_upperCaseFirstChar" finished-at="2023-05-06T08:00:11Z" duration-ms="5422" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_05_upperCaseFirstChar -->
+        <test-method signature="TC_06_inputEmailAddress()[pri:0, instance:Tester.Testing@4a9419d7]" started-at="2023-05-06T08:00:11Z" name="TC_06_inputEmailAddress" finished-at="2023-05-06T08:00:17Z" duration-ms="5175" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_06_inputEmailAddress -->
+        <test-method is-config="true" signature="afterClass()[pri:0, instance:Tester.Testing@4a9419d7]" started-at="2023-05-06T08:00:17Z" name="afterClass" finished-at="2023-05-06T08:00:17Z" duration-ms="585" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterClass -->
+      </class> <!-- Tester.Testing -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
