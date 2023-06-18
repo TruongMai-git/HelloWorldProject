@@ -1,5 +1,9 @@
-package Webdriver;
+package Tester;
 
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeClass;
+import org.testng.AssertJUnit;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -31,17 +35,22 @@ public class CheckEnv {
 
 	@Test
 	public void TC_01_Url() {
-		Assert.assertEquals(driver.getCurrentUrl(), "https://www.facebook.com/");
+		AssertJUnit.assertEquals(driver.getCurrentUrl(), "https://www.facebook.com/");
+	}
+	
+	@Test
+	public void TC_05_Url() {
+		System.out.println("SSH Port Forwarding");
 	}
 
 	@Test
 	public void TC_02_Logo() {
-		Assert.assertTrue(driver.findElement(By.cssSelector("img.fb_logo")).isDisplayed());
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector("img.fb_logo")).isDisplayed());
 	}
 
 	@Test
 	public void TC_03_Form() {
-		Assert.assertTrue(driver.findElement(By.xpath("//form[@data-testid='royal_login_form']")).isDisplayed());
+		AssertJUnit.assertTrue(driver.findElement(By.xpath("//form[@data-testid='royal_login_form']")).isDisplayed());
 	}
 
 	@AfterClass
