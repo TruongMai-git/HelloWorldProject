@@ -3,6 +3,8 @@ package Tester;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,13 +16,13 @@ public class JiraAuto {
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
 	String URL = "https://id.atlassian.com/login";
-	String EMAIL = ""; 
-	String PASS = "";
-	String originFilter = "project = PY AND issuetype = Story AND resolution = Unresolved order by updated DESC";
-	String originXpath = "//ol[@class='issue-list']/li[";
+	String EMAIL = "cauvu1998@gmail.com";
+	String PASS = "Test!234";
+	String originFilter = "project = PY AND issuetype = Story AND resolution = Unresolved ORDER BY key ASC, updated DESC";
 	String TE = "[TE]";
 	String TD = "[TD]";
-	
+	String jiraBrowser = "https://selfstudy.atlassian.net/browse/";
+
 	@BeforeClass
 	public void beforeClass() {
 		if (osName.contains("Windows")) {
@@ -31,118 +33,112 @@ public class JiraAuto {
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
-		driver.get(URL);	
+		driver.get(URL);
 	}
-	
+
 	@Test
 	public void TC_01_logInSuccess() {
-		WebElement enterEmail = driver.findElement(By.name("username"));
-		enterEmail.sendKeys(EMAIL);
-		WebElement loginButton = driver.findElement(By.id("login-submit"));
-		loginButton.click();
+		driver.findElement(By.name("username")).sendKeys(EMAIL);
+		driver.findElement(By.id("login-submit")).click();
 		sleepInSecond(3);
-		WebElement passWord = driver.findElement(By.name("password"));
-		passWord.sendKeys(PASS);
-		WebElement loginButton1 = driver.findElement(By.id("login-submit"));
-		loginButton1.click();
+		driver.findElement(By.name("password")).sendKeys(PASS);
+		driver.findElement(By.id("login-submit")).click();
 		sleepInSecond(5);
 	}
 
 	@Test
 	public void TC_02_navigateToFilter() {
 		/// Navigate to filter
-		WebElement hamburger = driver.findElement(By.xpath("//span[@aria-label='Appswitcher Icon']"));
-		hamburger.click();
-		WebElement jiraSoft = driver.findElement(By.xpath("//span[text()='Jira Software']"));
-		jiraSoft.click();
+		driver.findElement(By.xpath("//span[@aria-label='Appswitcher Icon']")).click();
+		driver.findElement(By.xpath("//span[text()='Jira Software']")).click();
 		sleepInSecond(3);
-		WebElement filters = driver.findElement(By.xpath("//span[text()='Filters']"));
-		filters.click();//open all filter
-		WebElement viewAllFilters = driver.findElement(By.xpath("//span[text()='My open issues']"));
-		viewAllFilters.click();//navigateFilter
+		// open all filter
+		driver.findElement(By.xpath("//span[text()='Filters']")).click();
+		// navigateFilter
+		driver.findElement(By.xpath("//span[text()='My open issues']")).click();
 		sleepInSecond(5);
-		WebElement viewType = driver.findElement(By.id("layout-switcher-button"));
-		WebElement columnButton = driver.findElement(By.xpath("//button[text()='Columns']"));
-		if (columnButton.isDisplayed()) {
-			viewType.click();
-			driver.findElement(By.xpath("//a[text()='Detail View']")).click();
-			sleepInSecond(5);
 
+		// switch to Detail view
+		WebElement activeLayout = driver
+				.findElement(By.xpath("//ul[@class = 'aui-list-section aui-first aui-last']/li[1]//span"));
+		if (activeLayout.getCssValue("class") != "aui-icon aui-icon-small aui-iconfont-success") {
+			activeLayout.click();
 		}
-		WebElement switchToJQL = driver.findElement(By.xpath("//a[text()='Switch to JQL']")); 
-		if (switchToJQL.isDisplayed()) {
-			switchToJQL.click();
+		sleepInSecond(5);
+		// switch to advance search
+		WebElement nowInactive = driver.findElement(By.cssSelector(".switcher-item"));
+		if (nowInactive.getCssValue("data-id") != "basic") {
+			nowInactive.click();
 		}
 	}
-	
-	@Test 
+
+	@Test
 	public void TC_03_allFilter() {
 		/// Input filter
 		WebElement jqltextarea = driver.findElement(By.xpath("//textarea[@id='advanced-search']"));
 		jqltextarea.clear();
 		jqltextarea.sendKeys(originFilter);
-		WebElement searchButton = driver.findElement(By.xpath("//button[text()='Search']"));
-		searchButton.click();
+		driver.findElement(By.xpath("//button[text()='Search']")).click();
 		sleepInSecond(5);
 	}
-	
+
 	@Test
-	public void TC_04_() {
-		//Get page size
-		WebElement textOfPageSize = driver.findElement(By.xpath("//li[@class='showing']"));
-		String subTring = textOfPageSize.getText().substring(5);
-		int pageSize = Integer.parseInt(subTring);
-		for(int i=1; i<= pageSize; i++){
-			String s = Integer.toString(i);
-        	String correctXpath = originXpath + s + ']';
-        	System.out.print(correctXpath);
-        	WebElement issue = driver.findElement(By.xpath(correctXpath));
-			String ticketId= issue.getAttribute("data-key");
-			String DATAKEY = " [" + ticketId + "] ";
-			String TITLE = issue.getAttribute("title");
-			System.out.println(ticketId);
-			System.out.println(TITLE);
-			/// Create a issue
-			WebElement createNewIssue = driver.findElement(By.xpath("//*[@id='createGlobalItem']/span"));
-			createNewIssue.click();			
-			sleepInSecond(5);
-			//Summary 
-			WebElement inputSummary = driver.findElement(By.xpath("//input[@name='summary']")); 
-			inputSummary.sendKeys(TE, DATAKEY, TITLE);
-			sleepInSecond(4);
-			//LinkedIssueType
-			String JIRABROWSER = "https://selfstudy.atlassian.net/browse/";
-			String TICKETLINK = JIRABROWSER + ticketId;
-			//clickLinkedIssueType
-			WebElement createIssueTitle = driver.findElement(By.xpath("//label[text()='Linked Issues']//following-sibling::div//div[@class=' css-hkzqy0-singleValue']")); 
-			createIssueTitle.click();
-			driver.findElement(By.xpath("//div[text()='blocks']")).click();
+	public void TC_04_createAllIssue() {
+		/// Create Issue Base On Parent List
+		List<WebElement> allIssue = driver.findElements(By.cssSelector("ol.issue-list>li"));
+		int pageSize = allIssue.size();
+		System.out.println("Total issue:" + pageSize);
+		for (WebElement issue : allIssue) {
+			String title = issue.getAttribute("title");
+			String dataKey = issue.getAttribute("data-key");
+			String newTitle = TE + " [" + dataKey + "] " + title;
+
+			/// Create a Issue
+			driver.findElement(By.xpath("//*[@id='createGlobalItem']/span")).click();
 			sleepInSecond(3);
-			//clickLinkedIssueId     >>
-			WebElement linkinkedIssueId = driver.findElement(By.xpath("//div[text()='Select Issue']/parent::div//input")); 
-			linkinkedIssueId.sendKeys(TICKETLINK);
-			sleepInSecond(3);
-			//choose exactId
-			WebElement chooseExactId = driver.findElement(By.xpath("//div[contains(text(),'Exact key')]"));
-			chooseExactId.click();
+			// Summary
+			driver.findElement(By.name("summary")).sendKeys(newTitle);
 			sleepInSecond(2);
-			//Click create  ticket
-			driver.findElement(By.xpath("//button[@type='submit']")).click();
-			sleepInSecond(5);
+			// Link Parent Issue
+			driver.findElement(By.xpath(
+					"//label[text()='Linked Issues']//following-sibling::div//div[@class=' css-hkzqy0-singleValue']"))
+					.click();
+			driver.findElement(By.xpath("//div[text()='blocks']")).click();
+			// Click on select issue drop down
+			driver.findElement(By.xpath("//div[text()='Select Issue']")).click();
+			driver.findElement(By.xpath(
+					"//div[text()='Select Issue']//following-sibling::div//input[contains(text(),react-select-)]"))
+					.sendKeys(jiraBrowser, dataKey);
+			sleepInSecond(2);
+			driver.findElement(By.xpath("//div[contains(text(),'Exact key')]")).click();
+			sleepInSecond(2);
+			// selectSprint //clickLabels//SelectPriority//SelectPriority//clickFixversion
+			// Select Project
+			// Select Component
+			// Select Fix version
+			// Select Priority
+			// Select Labels
+			// Select Sprint
 			
-			}
-	}	
-	
+			// Click create Ticket
+			driver.findElement(By.xpath("//button[@type='submit']")).click();
+			sleepInSecond(3);
+			System.out.println("Created issue" + newTitle);
+
+		}
+	}
+
 	@AfterClass
-	
+
 	public void afterClass() {
 		driver.quit();
 	}
+
 	private void sleepInSecond(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+		try {
+			Thread.sleep(seconds * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }
