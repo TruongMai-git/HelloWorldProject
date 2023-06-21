@@ -16,7 +16,7 @@ public class JiraAuto {
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
 	String URL = "https://id.atlassian.com/login";
-	String EMAIL = "cauvu1998@gmail.com";
+	String EMAIL = "@gmail.com";
 	String PASS = "Test!234";
 	String originFilter = "project = PY AND issuetype = Story AND resolution = Unresolved ORDER BY key ASC, updated DESC";
 	String TE = "[TE]";
