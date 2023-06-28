@@ -3,11 +3,28 @@ package Tester;
 import java.sql.*;
 
 public class RestQueryExample {
+    //DriverManagerGetConnectionByUrl
     private static Connection getConnection() throws SQLException {
-        String jdbcUrl = "jdbc:TAOS-RS://localhost:6041/power?user=root&password=taosdata";
+        String jdbcUrl = "URL";
         return DriverManager.getConnection(jdbcUrl);
     }
 
+    //Statement
+    private static void queryData() throws SQLException {
+        try (Connection conn = getConnection()) {
+            try (Statement stmt = conn.createStatement()) {
+                ResultSet rs = stmt.executeQuery("SQL");
+                processResult(rs);
+            }
+        }
+    }
+
+    //Call statement
+    public static void main(String[] args) throws SQLException {
+        queryData();
+    }
+
+    //Print result
     private static void printRow(ResultSet rs) throws SQLException {
         ResultSetMetaData meta = rs.getMetaData();
         for (int i = 1; i <= meta.getColumnCount(); i++) {
@@ -18,7 +35,8 @@ public class RestQueryExample {
         System.out.println();
     }
 
-    private static void printColName(ResultSet rs) throws SQLException {
+    //
+    private static void printColName  (ResultSet rs) throws SQLException {
         ResultSetMetaData meta = rs.getMetaData();
         for (int i = 1; i <= meta.getColumnCount(); i++) {
             String colLabel = meta.getColumnLabel(i);
@@ -28,6 +46,7 @@ public class RestQueryExample {
         System.out.println();
     }
 
+    //
     private static void processResult(ResultSet rs) throws SQLException {
         printColName(rs);
         while (rs.next()) {
@@ -35,16 +54,4 @@ public class RestQueryExample {
         }
     }
 
-    private static void queryData() throws SQLException {
-        try (Connection conn = getConnection()) {
-            try (Statement stmt = conn.createStatement()) {
-                ResultSet rs = stmt.executeQuery("SELECT AVG(voltage) FROM meters GROUP BY location");
-                processResult(rs);
-            }
-        }
-    }
-
-    public static void main(String[] args) throws SQLException {
-        queryData();
-    }
 }

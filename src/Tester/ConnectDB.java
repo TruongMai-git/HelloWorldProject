@@ -13,17 +13,17 @@ public class ConnectDB {
 	// Constant for SSH properties
 	String driverName = "org.postgresql.Driver";
 	public static String DB_USER = "master";
-	public static String DB_PASSWORD = "4JR7YS3gilF82xyjMMUb";
+	public static String DB_PASSWORD = "x5PC3yF7cupaYZYqcUztd3";
 	public static String DB_NAME = "customer";
 
 	@BeforeTest
 
 	public void setUp() throws Exception {
 		try {
-			String dbUrl = "jdbc:mysql://localhost:5433/";
-
+			String dbUrl = "jdbc:postgresql://localhost:5433/" + DB_NAME;
+			System.out.println("connecting to " + dbUrl);
 			// Connect to the database using JDBC
-			con = DriverManager.getConnection(dbUrl + DB_NAME, DB_USER, DB_PASSWORD);
+			con = DriverManager.getConnection(dbUrl, DB_USER, DB_PASSWORD);
 			if (con != null) {
 				System.out.println("Get connection");
 			} else {
@@ -35,9 +35,6 @@ public class ConnectDB {
 
 		}
 	}
-
-
-
 
 	@Test
 	public void test() {
