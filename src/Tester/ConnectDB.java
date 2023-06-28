@@ -13,7 +13,7 @@ public class ConnectDB {
 	// Constant for SSH properties
 	String driverName = "org.postgresql.Driver";
 	public static String DB_USER = "master";
-	public static String DB_PASSWORD = "x5PC3yF7cupaYZYqcUztd3";
+	public static String DB_PASSWORD = "x5PC3yF7cupaYZYqcUztd3at";
 	public static String DB_NAME = "customer";
 
 	@BeforeTest
