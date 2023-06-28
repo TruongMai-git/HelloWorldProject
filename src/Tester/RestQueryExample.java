@@ -46,7 +46,7 @@ public class RestQueryExample {
         System.out.println();
     }
 
-    //
+    //Result
     private static void processResult(ResultSet rs) throws SQLException {
         printColName(rs);
         while (rs.next()) {
