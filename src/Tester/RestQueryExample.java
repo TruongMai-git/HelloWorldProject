@@ -5,7 +5,7 @@ import java.sql.*;
 public class RestQueryExample {
     //DriverManagerGetConnectionByUrl
     private static Connection getConnection() throws SQLException {
-        String jdbcUrl = "URL";
+        String jdbcUrl = "jdbc:postgresql://localhost:5433/customer";
         return DriverManager.getConnection(jdbcUrl);
     }
 
@@ -15,6 +15,7 @@ public class RestQueryExample {
             try (Statement stmt = conn.createStatement()) {
                 ResultSet rs = stmt.executeQuery("SQL");
                 processResult(rs);
+
             }
         }
     }

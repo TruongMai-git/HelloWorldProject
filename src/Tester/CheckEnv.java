@@ -1,23 +1,24 @@
 package Tester;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeClass;
-import org.testng.AssertJUnit;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Assert;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.AssertJUnit;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.concurrent.TimeUnit;
 
 public class CheckEnv {
 	WebDriver driver;
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
+	WebDriverWait explicitWait;
+	JavascriptExecutor jsExcutor;
 
 	@BeforeClass
 	public void beforeClass() {
@@ -28,16 +29,20 @@ public class CheckEnv {
 		}
 
 		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		jsExcutor = (JavascriptExecutor) driver;
+		explicitWait = new WebDriverWait(driver, 10);
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.get("https://www.facebook.com/");
+
 	}
 
 	@Test
 	public void TC_01_Url() {
 		AssertJUnit.assertEquals(driver.getCurrentUrl(), "https://www.facebook.com/");
 	}
-	
+
+	//	explicitWait.until(ExpectedConditions.attributeToBe());
 	@Test
 	public void TC_05_Url() {
 		System.out.println("SSH Port Forwarding");
@@ -57,4 +62,46 @@ public class CheckEnv {
 	public void afterClass() {
 		driver.quit();
 	}
+
+	public boolean isPageLoadedSuccess() {
+		explicitWait = new WebDriverWait(driver, 30);
+		ExpectedCondition<Boolean> jqueryLoad = new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				return (Boolean) jsExcutor.executeScript("return (window.jQuery != null) && (jQuery.active ===0);");
+			}
+		};
+		ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				return jsExcutor.executeScript("return document.readyState").toString().equals("complete");
+			}
+		};
+		return explicitWait.until(jqueryLoad) && explicitWait.until(jsLoad);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

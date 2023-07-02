@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeTest;
 public class ConnectDB {
 	// Connection object
 	static Connection con = null;
-	// Statement object
+	// Statement
 	private static Statement stmt;
 	// Constant for SSH properties
 	String driverName = "org.postgresql.Driver";
